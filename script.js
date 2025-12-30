@@ -14,14 +14,14 @@ function downloadImage(url) {
 
     img.onload = () => resolve(img);
     img.onerror = () =>
-      reject("Failed to download image");
+      reject(`Failed to download image from URL: ${url}`);
 
     img.src = url;
   });
 }
 
 function downloadImages() {
-  // show loading
+  // Show loading spinner
   loadingDiv.style.display = "block";
   errorDiv.innerText = "";
   output.innerHTML = "";
@@ -43,5 +43,6 @@ function downloadImages() {
       errorDiv.innerText = err;
     });
 }
+
 
 downloadImages();
