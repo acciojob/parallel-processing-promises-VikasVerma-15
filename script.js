@@ -1,6 +1,7 @@
 const output = document.getElementById("output");
 const loadingDiv = document.getElementById("loading");
 const errorDiv = document.getElementById("error");
+const button = document.getElementById("download-images-button");
 
 const images = [
   { url: "https://picsum.photos/id/237/200/300" },
@@ -13,17 +14,14 @@ function downloadImage(url) {
     const img = new Image();
 
     img.onload = () => resolve(img);
-
-    img.onerror = () => {
+    img.onerror = () =>
       reject(new Error(`Image failed to download: ${url}`));
-    };
 
     img.src = url;
   });
 }
 
 function downloadImages() {
-  // Reset UI
   loadingDiv.style.display = "block";
   errorDiv.textContent = "";
   output.innerHTML = "";
@@ -32,9 +30,7 @@ function downloadImages() {
 
   Promise.all(promises)
     .then((imgs) => {
-      imgs.forEach(img => {
-        output.appendChild(img);
-      });
+      imgs.forEach(img => output.appendChild(img));
     })
     .catch((err) => {
       errorDiv.textContent = err.message;
@@ -43,3 +39,7 @@ function downloadImages() {
       loadingDiv.style.display = "none";
     });
 }
+
+// ✅ REQUIRED for Cypress
+button.addEventListener("click", downloadImages);
+
