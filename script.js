@@ -39,7 +39,5 @@ function downloadImages() {
       loadingDiv.style.display = "none";
     });
 }
-
-// ✅ REQUIRED for Cypress
 button.addEventListener("click", downloadImages);
 
